@@ -69,6 +69,8 @@
   <ItemGroup>
     <Content Include="Footer.ascx" />
     <Content Include="Header.ascx" />
+    <Content Include="LoanForm.aspx" />
+    <Content Include="v915-techi-025-l.jpg" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -89,6 +91,13 @@
     </Compile>
     <Compile Include="Loan.Master.designer.cs">
       <DependentUpon>Loan.Master</DependentUpon>
+    </Compile>
+    <Compile Include="LoanForm.aspx.cs">
+      <DependentUpon>LoanForm.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LoanForm.aspx.designer.cs">
+      <DependentUpon>LoanForm.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

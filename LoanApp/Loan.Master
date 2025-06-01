@@ -1,5 +1,8 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Loan.master.cs" Inherits="LoanApp.Loan" %>
 
+<%@ Register Src="~/Header.ascx" TagName="MyHeader" TagPrefix="lon" %>
+<%@ Register Src="~/Footer.ascx" TagName="MyFooter" TagPrefix="lon" %>
+
 <!DOCTYPE html>
 
 <html>
