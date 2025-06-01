@@ -76,18 +76,21 @@
   <ItemGroup>
     <Compile Include="Footer.ascx.cs">
       <DependentUpon>Footer.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Footer.ascx.designer.cs">
       <DependentUpon>Footer.ascx</DependentUpon>
     </Compile>
     <Compile Include="Header.ascx.cs">
       <DependentUpon>Header.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Header.ascx.designer.cs">
       <DependentUpon>Header.ascx</DependentUpon>
     </Compile>
     <Compile Include="Loan.Master.cs">
       <DependentUpon>Loan.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Loan.Master.designer.cs">
       <DependentUpon>Loan.Master</DependentUpon>
