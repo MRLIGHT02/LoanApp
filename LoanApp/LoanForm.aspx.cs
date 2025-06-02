@@ -44,9 +44,9 @@ namespace LoanApp
                     cmd.Parameters.AddWithValue("@MonthlyIncome", LoanIncome.Text);
                     cmd.Parameters.AddWithValue("@LoanType", LoanType.SelectedValue);
                     cmd.ExecuteNonQuery();
+                ClearField();
                 }
                 ShowData();
-                ClearField();
             }
         }
 
@@ -71,13 +71,15 @@ namespace LoanApp
         {
             LoanFullName.Text = "";
             LoanDOB.Text = "";
-            LoanGender.Text = "";
+            LoanAddress.Text = "";
+            LoanGender.SelectedValue= "0";
             LoanEmail.Text = "";
             LoanPhone.Text = "";
-            LoanEmploymentType.Text = "";
+            LoanEmploymentType.SelectedValue= "0";
             LoanCompany.Text = "";
             LoanIncome.Text = "";
-            LoanType.Text = "";
+            LoanAmount.Text = "";
+            LoanType.SelectedValue = "0";
         }
         protected void gvloan_RowCommand(object sender, GridViewCommandEventArgs e)
         {
@@ -88,7 +90,7 @@ namespace LoanApp
                 {
                     using (SqlCommand cmd = new SqlCommand(query, sql))
                     {
-                        cmd.Parameters.AddWithValue("@Id",e.CommandArgument);
+                        cmd.Parameters.AddWithValue("@Id", e.CommandArgument);
                         sql.Open();
                         cmd.ExecuteNonQuery();
                         sql.Close();
@@ -98,23 +100,25 @@ namespace LoanApp
             }
             else if (e.CommandName == "edt")
             {
-                string ShowQuery = @"select * from LoanApplication";
+                string ShowQuery = @"select * from LoanApplication where Id=@Id";
                 using (SqlConnection sql = new SqlConnection(connectionStr))
                 using (SqlCommand cmd = new SqlCommand(ShowQuery, sql))
                 using (SqlDataAdapter sqlData = new SqlDataAdapter(cmd))
                 using (DataTable dt = new DataTable())
                 {
+
                     sql.Open();
+                    cmd.Parameters.AddWithValue("@Id", Convert.ToInt32(e.CommandArgument));
                     sqlData.Fill(dt);
-                    LoanFullName.Text= dt.Rows[0]["FullName"].ToString();
-                    LoanDOB.Text= dt.Rows[0]["DateOfBirth"].ToString();
-                    LoanGender.Text= dt.Rows[0]["Gender"].ToString();
-                    LoanEmail.Text= dt.Rows[0]["Email"].ToString();
-                    LoanPhone.Text= dt.Rows[0]["PhoneNumber"].ToString();
-                    LoanEmploymentType.Text= dt.Rows[0]["EmploymentType"].ToString();
-                    LoanCompany.Text= dt.Rows[0]["CompanyName"].ToString();
-                    LoanIncome.Text= dt.Rows[0]["MonthlyIncome"].ToString();
-                    LoanType.Text= dt.Rows[0]["LoanType"].ToString();
+                    LoanFullName.Text = dt.Rows[0]["FullName"].ToString();
+                    LoanDOB.Text = dt.Rows[0]["DateOfBirth"].ToString();
+                    LoanGender.SelectedValue = dt.Rows[0]["Gender"].ToString();
+                    LoanEmail.Text = dt.Rows[0]["Email"].ToString();
+                    LoanPhone.Text = dt.Rows[0]["PhoneNumber"].ToString();
+                    LoanEmploymentType.SelectedValue = dt.Rows[0]["EmploymentType"].ToString();
+                    LoanCompany.Text = dt.Rows[0]["CompanyName"].ToString();
+                    LoanIncome.Text = dt.Rows[0]["MonthlyIncome"].ToString();
+                    LoanType.SelectedValue = dt.Rows[0]["LoanType"].ToString();
                     btnSubmit.Text = "Update";
                     ViewState["Id"] = e.CommandArgument;
                 }
