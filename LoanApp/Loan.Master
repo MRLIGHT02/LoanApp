@@ -1,36 +1,51 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Loan.master.cs" Inherits="LoanApp.Loan" %>
-
 <%@ Register Src="~/Header.ascx" TagName="MyHeader" TagPrefix="lon" %>
 <%@ Register Src="~/Footer.ascx" TagName="MyFooter" TagPrefix="lon" %>
 
 <!DOCTYPE html>
-
 <html>
 <head runat="server">
-    <title></title>
-    <asp:ContentPlaceHolder ID="head" runat="server">
-    </asp:ContentPlaceHolder>
+    <title>Loan Application</title>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .wrapper {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .content {
+            flex: 1;
+            padding: 20px;
+            overflow-x: auto;
+        }
+
+        .footer {
+            background-color: #f1f1f1;
+        }
+    </style>
+    <asp:ContentPlaceHolder ID="head" runat="server" />
 </head>
 <body>
     <form id="form1" runat="server">
-        <table>
-            <tr>
-                <td style="width: fit-content">
-                    <lon:MyHeader runat="server" />
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
-                    </asp:ContentPlaceHolder>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <lon:MyFooter runat="server" />
-                </td>
-            </tr>
-        </table>
+        <div class="wrapper">
+            <div>
+                <lon:MyHeader runat="server" />
+            </div>
+
+            <div class="content">
+                <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server" />
+            </div>
+
+            <div class="footer">
+                <lon:MyFooter runat="server" />
+            </div>
+        </div>
     </form>
 </body>
 </html>
