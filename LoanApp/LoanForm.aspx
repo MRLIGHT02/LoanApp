@@ -256,7 +256,7 @@
                         </asp:TemplateField>
                         <asp:TemplateField>
                             <ItemTemplate>
-                                <asp:Button runat="server" CommandName="delly" CommandArgument='<%# Eval("Id") %>' Text="Delete" ForeColor="Red" />
+                                <asp:Button runat="server" CommandName="delta" CommandArgument='<%# Eval("Id") %>' Text="Delete" ForeColor="Red" />
                             </ItemTemplate>
                         </asp:TemplateField>
                         <asp:TemplateField>

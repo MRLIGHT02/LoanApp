@@ -18,7 +18,7 @@ namespace LoanApp
             {
                 ShowData();
 
-                gvloan_RowCommand(null, null);
+
 
             }
         }
@@ -96,7 +96,7 @@ join loanType on LoanType=ltid
         {
             try
             {
-                if (e.CommandName == "delly")
+                if (e.CommandName == "delta")
                 {
                     string query = @"DELETE FROM LoanApplication WHERE Id=@Id";
                     using (SqlConnection sql = new SqlConnection(connectionStr))
@@ -106,7 +106,7 @@ join loanType on LoanType=ltid
                             cmd.Parameters.AddWithValue("@Id", e.CommandArgument);
                             sql.Open();
                             cmd.ExecuteNonQuery();
-                            sql.Close();
+
                         }
                     }
                     ShowData();
@@ -121,7 +121,7 @@ join loanType on LoanType=ltid
                     {
 
                         sql.Open();
-                        cmd.Parameters.AddWithValue("@Id", Convert.ToInt32(e.CommandArgument));
+                        cmd.Parameters.AddWithValue("@Id", e.CommandArgument);
                         sqlData.Fill(dt);
                         LoanFullName.Text = dt.Rows[0]["FullName"].ToString();
                         LoanDOB.Text = dt.Rows[0]["DateOfBirth"].ToString();
