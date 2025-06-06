@@ -152,6 +152,9 @@
                 <asp:ListItem Text="Salaried" Value="1" />
                 <asp:ListItem Text="Self-Employed" Value="2" />
                 <asp:ListItem Text="Unemployed" Value="3" />
+
+
+
             </asp:DropDownList>
             <asp:RequiredFieldValidator ID="rfLoanEmploymentType" runat="server"
                 ErrorMessage="Employment type is required" ControlToValidate="LoanEmploymentType"
@@ -187,6 +190,7 @@
                 <asp:ListItem Text="Home Loan" Value="2" />
                 <asp:ListItem Text="Car Loan" Value="3" />
                 <asp:ListItem Text="Education Loan" Value="" />
+
             </asp:DropDownList>
             <asp:RequiredFieldValidator ID="rfLoanType" runat="server"
                 ErrorMessage="Loan type is required" ControlToValidate="LoanType"
@@ -227,7 +231,7 @@
                             <ItemTemplate><%# Eval("DateOfBirth", "{0:dd-MM-yyyy}") %></ItemTemplate>
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="Gender">
-                            <ItemTemplate><%# Eval("Gender") %></ItemTemplate>
+                            <ItemTemplate><%# Eval("gendervalue") %></ItemTemplate>
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="Email">
                             <ItemTemplate><%# Eval("Email") %></ItemTemplate>
@@ -239,7 +243,7 @@
                             <ItemTemplate><%# Eval("Address") %></ItemTemplate>
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="Employment Type">
-                            <ItemTemplate><%# Eval("EmploymentType") %></ItemTemplate>
+                            <ItemTemplate><%# Eval("empt") %></ItemTemplate>
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="Company">
                             <ItemTemplate><%# Eval("CompanyName") %></ItemTemplate>
@@ -248,11 +252,12 @@
                             <ItemTemplate><%# Eval("MonthlyIncome") %></ItemTemplate>
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="Loan Type">
-                            <ItemTemplate><%# Eval("LoanType") %></ItemTemplate>
+                            <ItemTemplate><%# Eval("lt") %></ItemTemplate>
                         </asp:TemplateField>
                         <asp:TemplateField>
                             <ItemTemplate>
-                    <asp:Button runat="server" CommandName="del" CommandArgument='<%# Eval("Id") %>' Text="Delete" ForeColor="Red"/>                            </ItemTemplate>
+                                <asp:Button runat="server" CommandName="delly" CommandArgument='<%# Eval("Id") %>' Text="Delete" ForeColor="Red" />
+                            </ItemTemplate>
                         </asp:TemplateField>
                         <asp:TemplateField>
                             <ItemTemplate>

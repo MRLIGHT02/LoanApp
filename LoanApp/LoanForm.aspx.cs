@@ -18,6 +18,8 @@ namespace LoanApp
             {
                 ShowData();
 
+                gvloan_RowCommand(null, null);
+
             }
         }
 
@@ -44,15 +46,24 @@ namespace LoanApp
                     cmd.Parameters.AddWithValue("@MonthlyIncome", LoanIncome.Text);
                     cmd.Parameters.AddWithValue("@LoanType", LoanType.SelectedValue);
                     cmd.ExecuteNonQuery();
-                ClearField();
+                    ClearField();
                 }
                 ShowData();
+            }
+
+            else if (btnSubmit.Text == "Update")
+            {
+
             }
         }
 
         public void ShowData()
         {
-            string ShowQuery = @"select * from LoanApplication";
+            string ShowQuery = @"select * from LoanApplication 
+	join tblGender on Gender=genderid 
+join tblEmploymentType on EmploymentType=emptid 
+join loanType on LoanType=ltid
+";
             using (SqlConnection sql = new SqlConnection(connectionStr))
             using (SqlCommand cmd = new SqlCommand(ShowQuery, sql))
             using (SqlDataAdapter sqlData = new SqlDataAdapter(cmd))
@@ -72,10 +83,10 @@ namespace LoanApp
             LoanFullName.Text = "";
             LoanDOB.Text = "";
             LoanAddress.Text = "";
-            LoanGender.SelectedValue= "0";
+            LoanGender.SelectedValue = "0";
             LoanEmail.Text = "";
             LoanPhone.Text = "";
-            LoanEmploymentType.SelectedValue= "0";
+            LoanEmploymentType.SelectedValue = "0";
             LoanCompany.Text = "";
             LoanIncome.Text = "";
             LoanAmount.Text = "";
@@ -83,46 +94,56 @@ namespace LoanApp
         }
         protected void gvloan_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            if (e.CommandName == "del")
+            try
             {
-                string query = @"DELETE FROM LoanApplication WHERE Id=@Id";
-                using (SqlConnection sql = new SqlConnection(connectionStr))
+                if (e.CommandName == "delly")
                 {
-                    using (SqlCommand cmd = new SqlCommand(query, sql))
+                    string query = @"DELETE FROM LoanApplication WHERE Id=@Id";
+                    using (SqlConnection sql = new SqlConnection(connectionStr))
                     {
-                        cmd.Parameters.AddWithValue("@Id", e.CommandArgument);
+                        using (SqlCommand cmd = new SqlCommand(query, sql))
+                        {
+                            cmd.Parameters.AddWithValue("@Id", e.CommandArgument);
+                            sql.Open();
+                            cmd.ExecuteNonQuery();
+                            sql.Close();
+                        }
+                    }
+                    ShowData();
+                }
+                else if (e.CommandName == "edt")
+                {
+                    string ShowQuery = @"select * from LoanApplication where Id=@Id";
+                    using (SqlConnection sql = new SqlConnection(connectionStr))
+                    using (SqlCommand cmd = new SqlCommand(ShowQuery, sql))
+                    using (SqlDataAdapter sqlData = new SqlDataAdapter(cmd))
+                    using (DataTable dt = new DataTable())
+                    {
+
                         sql.Open();
-                        cmd.ExecuteNonQuery();
-                        sql.Close();
+                        cmd.Parameters.AddWithValue("@Id", Convert.ToInt32(e.CommandArgument));
+                        sqlData.Fill(dt);
+                        LoanFullName.Text = dt.Rows[0]["FullName"].ToString();
+                        LoanDOB.Text = dt.Rows[0]["DateOfBirth"].ToString();
+                        LoanGender.SelectedValue = dt.Rows[0]["Gender"].ToString();
+                        LoanEmail.Text = dt.Rows[0]["Email"].ToString();
+                        LoanPhone.Text = dt.Rows[0]["PhoneNumber"].ToString();
+                        LoanEmploymentType.SelectedValue = dt.Rows[0]["EmploymentType"].ToString();
+                        LoanCompany.Text = dt.Rows[0]["CompanyName"].ToString();
+                        LoanIncome.Text = dt.Rows[0]["MonthlyIncome"].ToString();
+                        LoanType.SelectedValue = dt.Rows[0]["LoanType"].ToString();
+                        LoanAmount.Text = dt.Rows[0][""].ToString();
+                        btnSubmit.Text = "Update";
+                        ViewState["abc"] = e.CommandArgument;
                     }
                 }
-                ShowData();
             }
-            else if (e.CommandName == "edt")
+            catch (NullReferenceException ex)
             {
-                string ShowQuery = @"select * from LoanApplication where Id=@Id";
-                using (SqlConnection sql = new SqlConnection(connectionStr))
-                using (SqlCommand cmd = new SqlCommand(ShowQuery, sql))
-                using (SqlDataAdapter sqlData = new SqlDataAdapter(cmd))
-                using (DataTable dt = new DataTable())
-                {
 
-                    sql.Open();
-                    cmd.Parameters.AddWithValue("@Id", Convert.ToInt32(e.CommandArgument));
-                    sqlData.Fill(dt);
-                    LoanFullName.Text = dt.Rows[0]["FullName"].ToString();
-                    LoanDOB.Text = dt.Rows[0]["DateOfBirth"].ToString();
-                    LoanGender.SelectedValue = dt.Rows[0]["Gender"].ToString();
-                    LoanEmail.Text = dt.Rows[0]["Email"].ToString();
-                    LoanPhone.Text = dt.Rows[0]["PhoneNumber"].ToString();
-                    LoanEmploymentType.SelectedValue = dt.Rows[0]["EmploymentType"].ToString();
-                    LoanCompany.Text = dt.Rows[0]["CompanyName"].ToString();
-                    LoanIncome.Text = dt.Rows[0]["MonthlyIncome"].ToString();
-                    LoanType.SelectedValue = dt.Rows[0]["LoanType"].ToString();
-                    btnSubmit.Text = "Update";
-                    ViewState["Id"] = e.CommandArgument;
-                }
+                Console.WriteLine(ex.Message);
             }
+
 
         }
     }
